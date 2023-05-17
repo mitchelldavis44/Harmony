@@ -1,10 +1,8 @@
 // infrastructure/mock_infrastructure.go
 package infrastructure
 
-import "fmt"
-
 type Infrastructure interface {
-	CreateResource(name string) error
+	CreateResource(name string, instanceType string, imageID string) error
 	DeleteResource(name string) error
 }
 
