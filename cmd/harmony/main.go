@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mitchelldavis44/harmony/pkg/infrastructure"
+	"github.com/mitchelldavis44/Harmony/pkg/infrastructure"
 	"github.com/mitchelldavis44/aws-provider/awsprovider"
 )
 
