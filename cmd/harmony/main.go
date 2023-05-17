@@ -32,7 +32,7 @@ func main() {
 		fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
 			instance.Name, instance.InstanceType, instance.ImageID)
 
-		err := infra.CreateResource(instance.Name)
+		err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID)
 		if err != nil {
 			fmt.Printf("Error creating resource: %v\n", err)
 			os.Exit(1)
