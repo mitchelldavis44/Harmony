@@ -11,7 +11,7 @@ import (
 
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Println("Usage: ./yourproject <action> <resource_name>")
+		fmt.Println("Usage: ./harmony <action> <resource_name>")
 		os.Exit(1)
 	}
 
