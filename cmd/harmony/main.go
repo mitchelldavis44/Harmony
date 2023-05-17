@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hashicorp/hcl/v2/gohcl"
 	"github.com/hashicorp/hcl/v2/hclsimple"
 	"github.com/mitchelldavis44/Harmony/pkg/infrastructure"
 	"github.com/mitchelldavis44/aws-provider/awsprovider"
