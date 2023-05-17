@@ -22,7 +22,14 @@ type Root struct {
 
 func main() {
 	var root Root
-	hclsimple.DecodeFile("infrastructure.harmony", nil, &root)
+	fmt.Println("Starting to decode file...") // New line
+	err := hclsimple.DecodeFile("infrastructure.harmony", nil, &root)
+	if err != nil {
+		fmt.Printf("Error decoding file: %v\n", err) // Print error if decoding fails
+		os.Exit(1)
+	}
+	fmt.Println("Successfully decoded file") // New line
+	fmt.Printf("Root: %+v\n", root) // New line: print the content of root
 
 	var infra infrastructure.Infrastructure
 	infra = awsprovider.NewAWSProvider()
@@ -36,6 +43,6 @@ func main() {
 			fmt.Printf("Error creating resource: %v\n", err)
 			os.Exit(1)
 		}
-		fmt.Printf("Successfully created resource: %s\n", instance.Name) // New line
+		fmt.Printf("Successfully created resource: %s\n", instance.Name)
 	}
 }
