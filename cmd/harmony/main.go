@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/yourusername/yourproject/infrastructure"
+	"github.com/mitchelldavis44/harmony/pkg/infrastructure"
+	"github.com/mitchelldavis44/aws-provider/awsprovider"
 )
 
 func main() {
@@ -17,7 +18,10 @@ func main() {
 	action := os.Args[1]
 	resourceName := os.Args[2]
 
-	infra := infrastructure.NewMockInfrastructure()
+	var infra infrastructure.Infrastructure
+	// Here you could decide which provider to use based on command line flags,
+	// configuration files, etc. For simplicity, we're always using the AWSProvider.
+	infra = awsprovider.NewAWSProvider()
 
 	switch action {
 	case "create":
