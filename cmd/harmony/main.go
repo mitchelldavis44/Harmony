@@ -36,6 +36,6 @@ func main() {
 			fmt.Printf("Error creating resource: %v\n", err)
 			os.Exit(1)
 		}
-		fmt.Printf("Created resource: %s\n", instance.Name)
+		fmt.Printf("Successfully created resource: %s\n", instance.Name) // New line
 	}
 }
