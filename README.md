@@ -3,7 +3,7 @@
 
 executable is placed inside the `./cmd/harmony` directory
 
-Be sure to create a infrastructure.hcl file in the same directory as the executable that you just crated
+Be sure to create a infrastructure.hcl file in the same directory as the executable that you just created
 to create resources.
 
 ## Example infrastructure.hcl
