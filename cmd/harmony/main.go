@@ -15,10 +15,12 @@ type AWSInstance struct {
 	Name              string `hcl:"name,label"`
 	InstanceType      string `hcl:"instance_type"`
 	ImageID           string `hcl:"image_id"`
-	SecurityGroupName string `hcl:"security_group_name"`
+	SecurityGroupId string `hcl:"security_group_id"`
 	KeyPairName       string `hcl:"key_pair_name"`
 	SubnetId          string `hcl:"subnet_id"`
 	IamInstanceProfile string `hcl:"iam_instance_profile"`
+	VpcId             string `hcl:"vpc_id"`
+	Tags map[string]string `hcl:"tags"`
 }
 
 type Root struct {
@@ -43,7 +45,7 @@ func main() {
 		fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
 			instance.Name, instance.InstanceType, instance.ImageID)
 
-		err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupName, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile)
+        err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
 		if err != nil {
 			fmt.Printf("Error creating resource: %v\n", err)
 			os.Exit(1)

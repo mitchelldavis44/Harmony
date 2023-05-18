@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/hashicorp/hcl/v2 v2.16.2
-	github.com/mitchelldavis44/aws-provider v0.0.0-20230517195948-3e2a92aabfc4
+	github.com/mitchelldavis44/aws-provider v0.0.0-20230518043622-ae8cd9735bea
 )
 
 require (

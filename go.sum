@@ -18,10 +18,12 @@ github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfC
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kylelemons/godebug v0.0.0-20170820004349-d65d576e9348 h1:MtvEpTB6LX3vkb4ax0b5D2DHbNAUsen0Gx5wZoq3lV4=
-github.com/mitchelldavis44/aws-provider v0.0.0-20230517194753-b2f5b16647bd h1:msLBW3e+RX3ZATJUfv6FFVedGV0s+fqCTtoVFG6IQkQ=
-github.com/mitchelldavis44/aws-provider v0.0.0-20230517194753-b2f5b16647bd/go.mod h1:P9fu/EEqEl62LUYxIQxUILosTwciMx6JqYDMG3YZ0ZI=
-github.com/mitchelldavis44/aws-provider v0.0.0-20230517195948-3e2a92aabfc4 h1:UQDUVNvK3k9oYxEfjuewPim3t6j1EQs+9u2AXM7j6L0=
-github.com/mitchelldavis44/aws-provider v0.0.0-20230517195948-3e2a92aabfc4/go.mod h1:P9fu/EEqEl62LUYxIQxUILosTwciMx6JqYDMG3YZ0ZI=
+github.com/mitchelldavis44/aws-provider v0.0.0-20230518035643-54d5a54848b2 h1:q888Vk6sOMjliCoUYxqnmPpt2gyhZOX7lzCvxCmVJhg=
+github.com/mitchelldavis44/aws-provider v0.0.0-20230518035643-54d5a54848b2/go.mod h1:P9fu/EEqEl62LUYxIQxUILosTwciMx6JqYDMG3YZ0ZI=
+github.com/mitchelldavis44/aws-provider v0.0.0-20230518042133-910bd39bb454 h1:CBwyixZYhaO3oG0mWwkzsXXDR42ioMEfrEWwKtYjBr0=
+github.com/mitchelldavis44/aws-provider v0.0.0-20230518042133-910bd39bb454/go.mod h1:P9fu/EEqEl62LUYxIQxUILosTwciMx6JqYDMG3YZ0ZI=
+github.com/mitchelldavis44/aws-provider v0.0.0-20230518043622-ae8cd9735bea h1:sb1BvCHjyJbDcNnR2LdnU20JBRbqh1WuK+vZsJLrZ8g=
+github.com/mitchelldavis44/aws-provider v0.0.0-20230518043622-ae8cd9735bea/go.mod h1:P9fu/EEqEl62LUYxIQxUILosTwciMx6JqYDMG3YZ0ZI=
 github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7 h1:DpOJ2HYzCv8LZP15IdmG+YdwD2luVPHITV96TkirNBM=
 github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7/go.mod h1:ZXFpozHsX6DPmq2I0TCekCxypsnAUbP2oI0UX1GXzOo=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

@@ -4,8 +4,8 @@ package infrastructure
 import "fmt"
 
 type Infrastructure interface {
-	CreateResource(name string, instanceType string, imageID string, securityGroupName string, keyPairName string, subnetId string, iamInstanceProfile string) error
-	DeleteResource(name string) error
+  CreateResource(name string, instanceType string, imageID string, securityGroupId string, keyPairName string, subnetId string, iamInstanceProfile string, vpcId string) error
+  DeleteResource(name string) error
 }
 
 type MockInfrastructure struct {
