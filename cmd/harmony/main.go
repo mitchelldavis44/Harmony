@@ -41,15 +41,26 @@ func main() {
 	var infra infrastructure.Infrastructure
 	infra = awsprovider.NewAWSProvider()
 
-	for _, instance := range root.AWSInstances {
-		fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
-			instance.Name, instance.InstanceType, instance.ImageID)
+	operation := os.Args[1] // this should be either "create" or "delete"
 
-        err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
-		if err != nil {
-			fmt.Printf("Error creating resource: %v\n", err)
-			os.Exit(1)
-		}
-		fmt.Printf("Successfully created resource: %s\n", instance.Name)
-	}
+    for _, instance := range root.AWSInstances {
+    	if operation == "create" {
+    		fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
+    			instance.Name, instance.InstanceType, instance.ImageID)
+    		err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
+    		if err != nil {
+    			fmt.Printf("Error creating resource: %v\n", err)
+    			os.Exit(1)
+    		}
+    		fmt.Printf("Successfully created resource: %s\n", instance.Name)
+    	} else if operation == "delete" {
+    		fmt.Printf("Deleting instance %s\n", instance.Name)
+    		err := infra.DeleteResource(instance.Name)
+    		if err != nil {
+    			fmt.Printf("Error deleting resource: %v\n", err)
+    			os.Exit(1)
+    		}
+    		fmt.Printf("Successfully deleted resource: %s\n", instance.Name)
+    	}
+    }
 }
