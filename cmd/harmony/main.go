@@ -11,9 +11,14 @@ import (
 )
 
 type AWSInstance struct {
-	Name         string `hcl:"name,label"`
-	InstanceType string `hcl:"instance_type"`
-	ImageID      string `hcl:"image_id"`
+	Type              string `hcl:"type,label"`  // Added this line
+	Name              string `hcl:"name,label"`
+	InstanceType      string `hcl:"instance_type"`
+	ImageID           string `hcl:"image_id"`
+	SecurityGroupName string `hcl:"security_group_name"`
+	KeyPairName       string `hcl:"key_pair_name"`
+	SubnetId          string `hcl:"subnet_id"`
+	IamInstanceProfile string `hcl:"iam_instance_profile"`
 }
 
 type Root struct {
@@ -23,7 +28,7 @@ type Root struct {
 func main() {
 	var root Root
 	fmt.Println("Starting to decode file...") // New line
-	err := hclsimple.DecodeFile("infrastructure.harmony", nil, &root)
+	err := hclsimple.DecodeFile("infrastructure.hcl", nil, &root)
 	if err != nil {
 		fmt.Printf("Error decoding file: %v\n", err) // Print error if decoding fails
 		os.Exit(1)
@@ -38,7 +43,7 @@ func main() {
 		fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
 			instance.Name, instance.InstanceType, instance.ImageID)
 
-		err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID)
+		err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupName, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile)
 		if err != nil {
 			fmt.Printf("Error creating resource: %v\n", err)
 			os.Exit(1)
