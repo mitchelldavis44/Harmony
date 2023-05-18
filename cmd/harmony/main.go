@@ -28,39 +28,46 @@ type Root struct {
 }
 
 func main() {
-	var root Root
-	fmt.Println("Starting to decode file...") // New line
-	err := hclsimple.DecodeFile("infrastructure.hcl", nil, &root)
-	if err != nil {
-		fmt.Printf("Error decoding file: %v\n", err) // Print error if decoding fails
-		os.Exit(1)
-	}
-	fmt.Println("Successfully decoded file") // New line
-	fmt.Printf("Root: %+v\n", root) // New line: print the content of root
+    var filename string
+    if len(os.Args) > 2 {
+        filename = os.Args[2]
+    } else {
+        filename = "infrastructure.hcl"
+    }
 
-	var infra infrastructure.Infrastructure
-	infra = awsprovider.NewAWSProvider()
+    var root Root
+    fmt.Println("Starting to decode file...")
+    err := hclsimple.DecodeFile(filename, nil, &root)  // use the filename variable here
+    if err != nil {
+        fmt.Printf("Error decoding file: %v\n", err)
+        os.Exit(1)
+    }
+    fmt.Println("Successfully decoded file")
+    fmt.Printf("Root: %+v\n", root)
 
-	operation := os.Args[1] // this should be either "create" or "delete"
+    var infra infrastructure.Infrastructure
+    infra = awsprovider.NewAWSProvider()
+
+    operation := os.Args[1] // this should be either "create" or "delete"
 
     for _, instance := range root.AWSInstances {
-    	if operation == "create" {
-    		fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
-    			instance.Name, instance.InstanceType, instance.ImageID)
-    		err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
-    		if err != nil {
-    			fmt.Printf("Error creating resource: %v\n", err)
-    			os.Exit(1)
-    		}
-    		fmt.Printf("Successfully created resource: %s\n", instance.Name)
-    	} else if operation == "delete" {
-    		fmt.Printf("Deleting instance %s\n", instance.Name)
-    		err := infra.DeleteResource(instance.Name)
-    		if err != nil {
-    			fmt.Printf("Error deleting resource: %v\n", err)
-    			os.Exit(1)
-    		}
-    		fmt.Printf("Successfully deleted resource: %s\n", instance.Name)
-    	}
+        if operation == "create" {
+            fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
+                instance.Name, instance.InstanceType, instance.ImageID)
+            err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
+            if err != nil {
+                fmt.Printf("Error creating resource: %v\n", err)
+                os.Exit(1)
+            }
+            fmt.Printf("Successfully created resource: %s\n", instance.Name)
+        } else if operation == "delete" {
+            fmt.Printf("Deleting instance %s\n", instance.Name)
+            err := infra.DeleteResource(instance.Name)
+            if err != nil {
+                fmt.Printf("Error deleting resource: %v\n", err)
+                os.Exit(1)
+            }
+            fmt.Printf("Successfully deleted resource: %s\n", instance.Name)
+        }
     }
 }
