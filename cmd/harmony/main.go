@@ -2,13 +2,18 @@
 package main
 
 import (
-	"fmt"
-	"os"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "os"
+    "path/filepath"
 
-	"github.com/hashicorp/hcl/v2/hclsimple"
-	"github.com/mitchelldavis44/Harmony/pkg/infrastructure"
-	"github.com/mitchelldavis44/aws-provider/awsprovider"
+    "github.com/hashicorp/hcl/v2/hclsimple"
+    "github.com/mitchelldavis44/Harmony/pkg/infrastructure"
+    "github.com/mitchelldavis44/aws-provider/awsprovider"
 )
+
+type InfraState map[string]string
 
 type AWSInstance struct {
 	Type              string `hcl:"type,label"`  // Added this line
@@ -28,6 +33,22 @@ type Root struct {
 }
 
 func main() {
+        state := make(InfraState)
+
+    // Define the path for your state directory and file
+    stateDir := ".state"
+    stateFile := filepath.Join(stateDir, "state.json")
+
+    // Try to create the state directory if it doesn't exist
+    if _, err := os.Stat(stateDir); os.IsNotExist(err) {
+        os.Mkdir(stateDir, 0755)
+    }
+
+    // Try to load state from a JSON file if it exists
+    if data, err := ioutil.ReadFile(stateFile); err == nil {
+    	json.Unmarshal(data, &state)
+    }
+
     var filename string
     if len(os.Args) > 2 {
         filename = os.Args[2]
@@ -54,20 +75,31 @@ func main() {
         if operation == "create" {
             fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
                 instance.Name, instance.InstanceType, instance.ImageID)
-            err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
+            instanceID, err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
             if err != nil {
                 fmt.Printf("Error creating resource: %v\n", err)
                 os.Exit(1)
             }
+            state[instance.Name] = instanceID  // store instance ID in state
             fmt.Printf("Successfully created resource: %s\n", instance.Name)
         } else if operation == "delete" {
             fmt.Printf("Deleting instance %s\n", instance.Name)
-            err := infra.DeleteResource(instance.Name)
+            instanceID, exists := state[instance.Name]  // get instance ID from state
+            if !exists {
+                fmt.Printf("No such resource: %s\n", instance.Name)
+                os.Exit(1)
+            }
+            err := infra.DeleteResource(instanceID)
             if err != nil {
                 fmt.Printf("Error deleting resource: %v\n", err)
                 os.Exit(1)
             }
+            delete(state, instance.Name)  // remove from state
             fmt.Printf("Successfully deleted resource: %s\n", instance.Name)
         }
     }
+
+    // Save state back to the JSON file in the state directory
+    file, _ := json.MarshalIndent(state, "", " ")
+    _ = ioutil.WriteFile(stateFile, file, 0644)
 }
