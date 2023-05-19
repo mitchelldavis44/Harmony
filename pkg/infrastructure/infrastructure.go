@@ -4,7 +4,7 @@ package infrastructure
 import "fmt"
 
 type Infrastructure interface {
-  CreateResource(name string, instanceType string, imageID string, securityGroupId string, keyPairName string, subnetId string, iamInstanceProfile string, vpcId string) (string, error)
+  CreateResource(name string, instanceType string, imageID string, securityGroupId string, keyPairName string, subnetId string, iamInstanceProfile string, vpcId string, tags map[string]string) (string, error)
   DeleteResource(name string) error
 }
 

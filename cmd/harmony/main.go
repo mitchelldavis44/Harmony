@@ -75,7 +75,7 @@ func main() {
         if operation == "create" {
             fmt.Printf("Creating instance %s with instance type %s and image ID %s\n",
                 instance.Name, instance.InstanceType, instance.ImageID)
-            instanceID, err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId)
+            instanceID, err := infra.CreateResource(instance.Name, instance.InstanceType, instance.ImageID, instance.SecurityGroupId, instance.KeyPairName, instance.SubnetId, instance.IamInstanceProfile, instance.VpcId, instance.Tags)
             if err != nil {
                 fmt.Printf("Error creating resource: %v\n", err)
                 os.Exit(1)
@@ -102,4 +102,6 @@ func main() {
     // Save state back to the JSON file in the state directory
     file, _ := json.MarshalIndent(state, "", " ")
     _ = ioutil.WriteFile(stateFile, file, 0644)
+
+    fmt.Println("Complete!")
 }
